@@ -1,5 +1,5 @@
 {
-  "name": "galena_frontend",
+  "name": "galena-pms",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
