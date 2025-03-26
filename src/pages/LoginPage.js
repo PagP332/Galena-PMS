@@ -1,9 +1,26 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { handleLoginButtonPressed } from "../utils/LoginPage_utils"
+import { useSession } from "../constants/sessionContext"
+import { userSignedInListener } from "../api/userAuth"
+import { Navigate, useNavigate } from "react-router-dom"
 
 const LoginPage = () => {
   const [formEmail, setFormEmail] = useState("")
   const [formPassword, setFormPassword] = useState("")
+  const { session, setSession } = useSession()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    console.log(session)
+    if (session !== null) {
+      navigate("/test_home")
+    }
+  }, [session, navigate])
+
+  const handleLogin = async () => {
+    console.log(session)
+    await handleLoginButtonPressed(formEmail, formPassword, setSession)
+  }
 
   return (
     <div style={containerStyle}>
@@ -23,9 +40,13 @@ const LoginPage = () => {
               type="email"
               placeholder="example@email.com"
               style={inputStyle}
+              onKeyDown={(e) => {
+                if (e === "Enter") handleLogin()
+              }}
               onChange={(e) => {
                 setFormEmail(e.target.value) // Everytime the form content changes, set the state to current value
               }}
+              required
             />
             <div style={iconBoxStyle}>
               <img src="/email.png" alt="Email Icon" style={iconStyle} />
@@ -41,9 +62,13 @@ const LoginPage = () => {
               type="password"
               placeholder="Enter your password"
               style={inputStyle}
+              onKeyDown={(e) => {
+                if (e === "Enter") handleLogin()
+              }}
               onChange={(e) => {
                 setFormPassword(e.target.value) // Everytime the form content changes, set the state to current value
               }}
+              required
             />
             <div style={iconBoxStyle}>
               <img src="/lock.png" alt="Lock Icon" style={iconStyle} />
@@ -59,7 +84,7 @@ const LoginPage = () => {
         </div>
 
         {/* Login Button */}
-        <button style={loginButtonStyle} onClick={() => handleLoginButtonPressed(formEmail, formPassword)}>
+        <button style={loginButtonStyle} onClick={handleLogin}>
           Login now
         </button>
 

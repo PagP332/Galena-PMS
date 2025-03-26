@@ -1,9 +1,11 @@
 import React, { useState } from "react"
 import { testFetch, testUpdate } from "./../api/tests"
+import { useSession } from "../constants/sessionContext"
 
 export default function Test() {
   const [data, setData] = useState("")
   const [formValue, setFormValue] = useState("")
+  const { session } = useSession()
   return (
     <div style={containerStyle}>
       <p style={{ color: "white" }}>{data}</p>
@@ -11,6 +13,7 @@ export default function Test() {
         style={button}
         onClick={() => {
           setData(testFetch())
+          console.log(session)
         }}
       >
         Test Fetch

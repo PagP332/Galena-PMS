@@ -1,4 +1,4 @@
-import { redirect } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { supabase } from "./client"
 
 /**
@@ -7,7 +7,7 @@ import { supabase } from "./client"
  */
 export const userSignedInListener = () => {
   supabase.auth.onAuthStateChange((event, session) => {
-    if (event == "SIGNED IN") {
+    if (event === "SIGNED IN") {
       console.log("Signed in session success:", session)
       return session
     } else return false
@@ -73,5 +73,14 @@ export const userSignInEmailOTP = async (email, redirectLink) => {
     return false
   } else {
     return data
+  }
+}
+
+export const userSignOut = async () => {
+  const { error } = await supabase.auth.signOut()
+  if (error) {
+    console.log(`There was an error authenticating: ${error}`)
+  } else {
+    console.log("Successfully logged out")
   }
 }
