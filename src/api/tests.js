@@ -1,9 +1,4 @@
-import { createClient } from "@supabase/supabase-js"
-import config from "./key"
-
-const supabaseUrl = config.SUPABASE_URL
-const supabaseKey = config.SUPABASE_ANON_KEY
-export const supabase = createClient(supabaseUrl, supabaseKey)
+import { supabase } from "./client"
 
 export const testFetch = async () => {
   const { data, error } = await supabase.from("test_data").select("foo").eq("id", 2)
