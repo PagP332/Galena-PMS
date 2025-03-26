@@ -5,11 +5,13 @@ import { userSignedInListener } from "../api/userAuth"
 import { Navigate, useNavigate } from "react-router-dom"
 
 const LoginPage = () => {
-  const [formEmail, setFormEmail] = useState("")
-  const [formPassword, setFormPassword] = useState("")
-  const { session, setSession } = useSession()
-  const navigate = useNavigate()
+  const [formEmail, setFormEmail] = useState("") // State for the Email input of user
+  const [formPassword, setFormPassword] = useState("") // State for the Password input of the user
+  const { session, setSession } = useSession() // For session context
+  const navigate = useNavigate() // For routing navigation
 
+  // On each render and state update, checks if there is an existing session (currently a user is logged in),
+  // If true, redirect login page to home_page instead
   useEffect(() => {
     console.log(session)
     if (session !== null) {
@@ -17,6 +19,8 @@ const LoginPage = () => {
     }
   }, [session, navigate])
 
+  // Login handler, when called, takes in the email and password state to the user authenticator,
+  // When successful, also change the session to match the user session
   const handleLogin = async () => {
     console.log(session)
     await handleLoginButtonPressed(formEmail, formPassword, setSession)

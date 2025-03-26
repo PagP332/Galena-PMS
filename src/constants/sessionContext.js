@@ -1,6 +1,9 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { supabase } from "../api/client"
 
+// SessionProvider is for the user session context, can be accessed anywhere within the the children of the whole app
+// Used by declaring { session, setSession } = useSession()
+
 const SessionContext = createContext(null)
 
 export const SessionProvider = ({ children }) => {
