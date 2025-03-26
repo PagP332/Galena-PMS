@@ -54,6 +54,12 @@ export const userSignInPassword = async (email, password) => {
   }
 }
 
+/**
+ * Sign in user with given email, sign in verified thru redirect link sent via OTP in given email.
+ * @param {*} email
+ * @param {*} redirectLink
+ * @returns
+ */
 export const userSignInEmailOTP = async (email, redirectLink) => {
   const { data, error } = await supabase.auth.signInWithOtp({
     email: email,
