@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { testFetch, testUpdate } from "./api/api_util"
+import { testFetch, testUpdate } from "./../api/api_util"
 
 export default function Test() {
   const [data, setData] = useState("")

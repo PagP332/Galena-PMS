@@ -1,12 +1,17 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import LoginPage from "./LoginPage"
-import Test from "./test_page"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import LoginPage from "./pages/LoginPage"
+import Test from "./pages/test_page"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
-    {/* <LoginPage /> */}
-    <Test />
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<LoginPage />} />
+        <Route path="test" element={<Test />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 )
