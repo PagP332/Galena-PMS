@@ -1,10 +1,12 @@
 import React, { useState } from "react"
 import { testFetch, testUpdate } from "./../api/tests"
 import { useSession } from "../constants/sessionContext"
+import { useNavigate } from "react-router-dom"
 
 export default function Test() {
   const [data, setData] = useState("")
   const [formValue, setFormValue] = useState("")
+  const navigate = useNavigate()
   const { session } = useSession()
   return (
     <div style={containerStyle}>
@@ -22,6 +24,9 @@ export default function Test() {
       <button style={button} onClick={() => testUpdate(formValue)}>
         Test Update
       </button>
+      <button style={button} onClick={() => navigate("/test_home")}>
+        Go back to home
+      </button>
     </div>
   )
 }
@@ -33,6 +38,7 @@ const containerStyle = {
   backgroundColor: "#1e1e1e",
 }
 const button = {
+  margin: 2,
   width: "20%",
   height: "5%",
 }

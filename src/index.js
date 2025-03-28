@@ -9,6 +9,9 @@ import NoPage from "./pages/_NoPage"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 
+// SessionProvider is for the user session context, can be accessed anywhere within the the children of the whole app
+// Used by declaring { session, setSession } = useSession()
+// SessionProvider component can be found withint the /constants/ folder
 root.render(
   <React.StrictMode>
     <SessionProvider>

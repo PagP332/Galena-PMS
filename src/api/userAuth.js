@@ -45,10 +45,10 @@ export const userSignInPassword = async (email, password) => {
     email: email,
     password: password,
   })
-  console.log(data)
+  // console.log(data)
   if (error) {
     console.log(`There was an error authenticating: ${error}`)
-    return false
+    throw new Error(error)
   } else {
     return data
   }
@@ -76,6 +76,9 @@ export const userSignInEmailOTP = async (email, redirectLink) => {
   }
 }
 
+/**
+ *
+ */
 export const userSignOut = async () => {
   const { error } = await supabase.auth.signOut()
   if (error) {

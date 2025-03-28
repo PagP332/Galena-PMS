@@ -13,8 +13,8 @@ const LoginPage = () => {
   // On each render and state update, checks if there is an existing session (currently a user is logged in),
   // If true, redirect login page to home_page instead
   useEffect(() => {
-    console.log(session)
     if (session !== null) {
+      console.log(session)
       navigate("/test_home")
     }
   }, [session, navigate])
@@ -22,8 +22,8 @@ const LoginPage = () => {
   // Login handler, when called, takes in the email and password state to the user authenticator,
   // When successful, also change the session to match the user session
   const handleLogin = async () => {
-    console.log(session)
     await handleLoginButtonPressed(formEmail, formPassword, setSession)
+    if (session) console.log(session)
   }
 
   return (
@@ -45,7 +45,7 @@ const LoginPage = () => {
               placeholder="example@email.com"
               style={inputStyle}
               onKeyDown={(e) => {
-                if (e === "Enter") handleLogin()
+                if (e.key === "Enter") handleLogin()
               }}
               onChange={(e) => {
                 setFormEmail(e.target.value) // Everytime the form content changes, set the state to current value
@@ -67,7 +67,7 @@ const LoginPage = () => {
               placeholder="Enter your password"
               style={inputStyle}
               onKeyDown={(e) => {
-                if (e === "Enter") handleLogin()
+                if (e.key === "Enter") handleLogin()
               }}
               onChange={(e) => {
                 setFormPassword(e.target.value) // Everytime the form content changes, set the state to current value
