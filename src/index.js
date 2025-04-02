@@ -6,6 +6,9 @@ import LoginPage from "./pages/LoginPage"
 import TestHome from "./pages/test_home"
 import Test from "./pages/test_page"
 import NoPage from "./pages/_NoPage"
+import AdminDashboard from './AdminDashboard';
+import ManagerDashboard from './ManagerDashboard';
+import TenantDashboard from './TenantDashboard';
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 
@@ -20,6 +23,9 @@ root.render(
           <Route index element={<LoginPage />} />
           <Route path="test" element={<Test />} />
           <Route path="test_home" element={<TestHome />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/manager" element={<ManagerDashboard />} />
+          <Route path="/tenant" element={<TenantDashboard />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>
