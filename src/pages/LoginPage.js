@@ -1,29 +1,37 @@
 import React, { useEffect, useState } from "react"
 import { handleLoginButtonPressed } from "../utils/LoginPage_utils"
-import { useSession } from "../constants/sessionContext"
-import { userSignedInListener } from "../api/userAuth"
+import { useSession } from "../context/sessionContext"
 import { Navigate, useNavigate } from "react-router-dom"
+import { getUserRole } from "../api/user"
 
 const LoginPage = () => {
   const [formEmail, setFormEmail] = useState("") // State for the Email input of user
   const [formPassword, setFormPassword] = useState("") // State for the Password input of the user
-  const { session, setSession } = useSession() // For session context
+  const { session, setSession, setUserID, setUserRole } = useSession() // For session context
   const navigate = useNavigate() // For routing navigation
 
   // On each render and state update, checks if there is an existing session (currently a user is logged in),
   // If true, redirect login page to home_page instead
   useEffect(() => {
     if (session !== null) {
+      const setUserContext = async () => {
+        const userID = session.user.id
+        const userRole = await getUserRole(userID)
+        console.log("UserRole: ", userRole)
+        console.log("UserID: ", userID)
+        setUserID(userID)
+        setUserRole(userRole)
+      }
+      setUserContext()
       console.log(session)
-      navigate("/test_home")
+      navigate("/home")
     }
-  }, [session, navigate])
+  }, [session, navigate, setUserID, setUserRole])
 
   // Login handler, when called, takes in the email and password state to the user authenticator,
   // When successful, also change the session to match the user session
   const handleLogin = async () => {
     await handleLoginButtonPressed(formEmail, formPassword, setSession)
-    if (session) console.log(session)
   }
 
   return (

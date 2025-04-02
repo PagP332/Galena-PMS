@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { testFetch, testUpdate } from "./../api/tests"
-import { useSession } from "../constants/sessionContext"
+import { useSession } from "../context/sessionContext"
 import { useNavigate } from "react-router-dom"
 
 export default function Test() {

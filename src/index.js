@@ -1,14 +1,12 @@
-import React from "react"
+import React, { Suspense } from "react"
 import ReactDOM from "react-dom/client"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { SessionProvider } from "./constants/sessionContext"
+import { SessionProvider } from "./context/sessionContext"
 import LoginPage from "./pages/LoginPage"
 import TestHome from "./pages/test_home"
 import Test from "./pages/test_page"
 import NoPage from "./pages/_NoPage"
-import AdminDashboard from "./pages/AdminDashboard"
-import ManagerDashboard from "./pages/ManagerDashboard"
-import TenantDashboard from "./pages/TenantDashboard"
+import { HomePage } from "./pages/HomePage"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 
@@ -18,17 +16,17 @@ const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
     <SessionProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<LoginPage />} />
-          <Route path="test" element={<Test />} />
-          <Route path="test_home" element={<TestHome />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/manager" element={<ManagerDashboard />} />
-          <Route path="/tenant" element={<TenantDashboard />} />
-          <Route path="*" element={<NoPage />} />
-        </Routes>
-      </BrowserRouter>
+      <Suspense fallback={<div>Loading...</div>}>
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<LoginPage />} />
+            <Route path="test" element={<Test />} />
+            <Route path="test_home" element={<TestHome />} />
+            <Route path="home" element={<HomePage />} />
+            <Route path="*" element={<NoPage />} />
+          </Routes>
+        </BrowserRouter>
+      </Suspense>
     </SessionProvider>
   </React.StrictMode>
 )

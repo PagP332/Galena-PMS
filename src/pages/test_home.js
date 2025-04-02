@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { userSignOut } from "../api/userAuth"
 import { useNavigate } from "react-router-dom"
-import { useSession } from "../constants/sessionContext"
+import { useSession } from "../context/sessionContext"
 import { getUserDisplayName } from "../api/user"
 
 export default function TestHome() {

@@ -11,3 +11,15 @@ export const getUserDisplayName = async (userId) => {
     return ""
   }
 }
+
+export const getUserRole = async (userId) => {
+  console.log("Getting user role ", userId)
+  const { data, error } = await supabase.from("SpecialRoles").select("Role").eq("UID", userId)
+  if (!error) {
+    // console.log("Display name: ", data)
+    return data[0].Role
+  } else {
+    console.log("Error getting user display name: ", error)
+    return ""
+  }
+}

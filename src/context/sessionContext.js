@@ -8,6 +8,8 @@ const SessionContext = createContext(null)
 
 export const SessionProvider = ({ children }) => {
   const [session, setSession] = useState(null)
+  const [userRole, setUserRole] = useState(null)
+  const [userID, setUserID] = useState(null)
 
   useEffect(() => {
     const {
@@ -24,7 +26,7 @@ export const SessionProvider = ({ children }) => {
     }
   }, [])
 
-  return <SessionContext.Provider value={{ session, setSession }}>{children}</SessionContext.Provider>
+  return <SessionContext.Provider value={{ session, setSession, userID, setUserID, userRole, setUserRole }}>{children}</SessionContext.Provider>
 }
 
 export const useSession = () => {
