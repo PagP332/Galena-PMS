@@ -6,9 +6,9 @@ import LoginPage from "./pages/LoginPage"
 import TestHome from "./pages/test_home"
 import Test from "./pages/test_page"
 import NoPage from "./pages/_NoPage"
-import AdminDashboard from './AdminDashboard';
-import ManagerDashboard from './ManagerDashboard';
-import TenantDashboard from './TenantDashboard';
+import AdminDashboard from "./pages/AdminDashboard"
+import ManagerDashboard from "./pages/ManagerDashboard"
+import TenantDashboard from "./pages/TenantDashboard"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 

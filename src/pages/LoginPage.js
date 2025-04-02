@@ -104,7 +104,7 @@ const LoginPage = () => {
 
       {/* Right Panel */}
       <div style={rightPanelStyle}>
-        <img src="/galenalogo.avif" alt="Galena Logo" style={{ width: "20rem" }} />
+        <img src="/galenalogo.avif" alt="Galena Logo" style={{ width: "15rem" }} />
       </div>
     </div>
   )
