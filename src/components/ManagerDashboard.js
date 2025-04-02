@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { SignOut } from "./SignOut"
+import { SignOutButton } from "./SignOutButton"
 
 const ManagerDashboard = () => {
   const [activeSection, setActiveSection] = useState("Dashboard")
@@ -35,7 +35,7 @@ const ManagerDashboard = () => {
         <div style={{ fontSize: "1rem" }}>
           <span style={{ marginRight: "20px", cursor: "pointer" }}>Profile & Settings</span>
           <span style={{ marginRight: "20px", cursor: "pointer" }}>Notifications</span>
-          <SignOut style={{ marginRight: "20px" }} />
+          <SignOutButton style={{ marginRight: "20px" }} />
         </div>
       </div>
 

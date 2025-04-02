@@ -7,16 +7,18 @@ import NoPage from "./_NoPage"
 
 export const HomePage = () => {
   const { userRole, userID } = useSession()
-  console.log("User Session Role: ", userID)
-  if (userRole === "ADMIN") {
-    return <AdminDashboard />
-  }
-  if (userRole === "MANAGER") {
-    return <ManagerDashboard />
-  }
-  if (userRole === "USER") {
-    return <TenantDashboard />
-  } else {
+  try {
+    console.log("User Session Role: ", userID)
+    if (userRole === "ADMIN") {
+      return <AdminDashboard />
+    }
+    if (userRole === "MANAGER") {
+      return <ManagerDashboard />
+    } else {
+      return <TenantDashboard />
+    }
+  } catch (e) {
+    console.log("Error: ", e)
     return <NoPage />
   }
 }

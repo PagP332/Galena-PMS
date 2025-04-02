@@ -2,7 +2,7 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 import { userSignOut } from "../api/userAuth"
 
-export const SignOut = () => {
+export const SignOutButton = () => {
   const navigate = useNavigate()
   const handleOut = async () => {
     await userSignOut()

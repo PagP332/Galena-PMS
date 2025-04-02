@@ -7,6 +7,7 @@ import TestHome from "./pages/test_home"
 import Test from "./pages/test_page"
 import NoPage from "./pages/_NoPage"
 import { HomePage } from "./pages/HomePage"
+import { SignOut } from "./pages/_SignOut"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 
@@ -23,6 +24,7 @@ root.render(
             <Route path="test" element={<Test />} />
             <Route path="test_home" element={<TestHome />} />
             <Route path="home" element={<HomePage />} />
+            <Route path="signout" element={<SignOut />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
         </BrowserRouter>
