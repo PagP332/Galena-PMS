@@ -8,7 +8,7 @@ import Test from "./pages/test_page"
 import NoPage from "./pages/_NoPage"
 import { HomePage } from "./pages/HomePage"
 import { SignOut } from "./pages/_SignOut"
-import "./index.css"
+import "./fonts.css"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 
