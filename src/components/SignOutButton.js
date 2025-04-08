@@ -9,7 +9,7 @@ export const SignOutButton = () => {
     navigate("/")
   }
   return (
-    <span onClick={() => handleOut()} style={{ cursor: "pointer", color: "red" }}>
+    <span onClick={() => handleOut()} style={{ cursor: "pointer", color: "black" }}>
       Sign Out
     </span>
   )

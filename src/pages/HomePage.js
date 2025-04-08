@@ -8,7 +8,8 @@ import NoPage from "./_NoPage"
 export const HomePage = () => {
   const { userRole, userID } = useSession()
   try {
-    console.log("User Session Role: ", userID)
+    console.log("User ID: ", userID)
+    console.log("User Role: ", userRole)
     if (userRole === "ADMIN") {
       return <AdminDashboard />
     }
