@@ -9,6 +9,9 @@ import NoPage from "./pages/_NoPage"
 import { HomePage } from "./pages/HomePage"
 import { SignOut } from "./pages/_SignOut"
 import TestDashboard from "./components/TestDashboard"
+import MyUtilities from "./components/MyUtilities"
+import MaintenanceRequests from "./components/MaintenanceRequests"
+import Billing from "./components/Billing"
 import "./fonts.css"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
@@ -24,7 +27,7 @@ const PrivateRoutes = ({ children }) => {
 root.render(
   <React.StrictMode>
     <SessionProvider>
-      <Suspense fallback={<div style={{ position: "absolute", justifyContent: "center", alignItems: "center" }}>Loading...</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
         <BrowserRouter>
           <Routes>
             <Route index element={<LoginPage />} />
@@ -35,6 +38,9 @@ root.render(
                   <Routes>
                     <Route path="home" element={<HomePage />} />
                     <Route path="signout" element={<SignOut />} />
+                    <Route path="t/utilities" element={<MyUtilities />} />
+                    <Route path="t/billing" element={<Billing />} />
+                    <Route path="t/maintenance" element={<MaintenanceRequests />} />
                     <Route path="test" element={<Test />} />
                     <Route path="test/home" element={<TestHome />} />
                     <Route path="test/dashboard" element={<TestDashboard />} />
