@@ -44,6 +44,7 @@ root.render(
                     <Route path="test" element={<Test />} />
                     <Route path="test/home" element={<TestHome />} />
                     <Route path="test/dashboard" element={<TestDashboard />} />
+                    <Route path="login" element={<LoginPage />} />
                     <Route path="*" element={<NoPage />} />
                   </Routes>
                 </PrivateRoutes>
