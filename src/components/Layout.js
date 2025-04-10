@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
     <div style={layoutContainer}>
       {/* Top Header */}
       <div style={topBarStyle}>
-        <span>Administrator</span>
+        <span>Welcome Tenant!</span>
         <div style={{ fontSize: "1rem" }}>
           <span style={{ marginRight: "20px", cursor: "pointer" }}>Profile & Settings</span>
           <span style={{ marginRight: "20px", cursor: "pointer" }}>Notifications</span>
