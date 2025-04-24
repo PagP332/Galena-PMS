@@ -106,6 +106,9 @@ export default function AdminGraphView() {
         <button style={button} onClick={() => setFilterHours(24)} disabled={isFilterDisabled || filterHours === 24}>
           24 hours
         </button>
+        <button style={button} onClick={() => setFilterHours(0)} disabled={isFilterDisabled || filterHours === 0}>
+          All
+        </button>
       </div>
     </div>
   )

@@ -37,6 +37,14 @@ export const unsubToChannel = (channel) => {
 
 export const dataCleanup = (data, hoursFilter = 1) => {
   //   console.log("payload data: ", data[0].payload[0].value)
+  if (hoursFilter === 0) {
+    return data
+      .map((e) => ({
+        x: new Date(e.time_created),
+        y: e.payload[0].value,
+      }))
+      .reverse()
+  }
   const oneHourAgo = new Date(Date.now() - hoursFilter * 60 * 60 * 1000)
   return data
     .filter((e) => new Date(e.time_created) >= oneHourAgo)
