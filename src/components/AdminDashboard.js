@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { SignOutButton } from "./SignOutButton"
+import AdminGraphView from "./AdminGraphView"
 import Loading from "./Loading"
 
 const AdminDashboard = () => {
@@ -98,7 +99,7 @@ const AdminDashboard = () => {
 // Dashboard Content
 const DashboardContent = ({ setActiveSection }) => {
   return (
-    <div style={{ textAlign: "center" }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", height: "100%" }}>
       <h1 style={{ color: "#D6C271", fontSize: "2rem" }}>Welcome to Your Administrator Interface</h1>
       <p>Stay organized and manage your properties efficiently</p>
       <div style={{ display: "flex", justifyContent: "center", gap: "20px", marginTop: "20px" }}>
@@ -107,8 +108,10 @@ const DashboardContent = ({ setActiveSection }) => {
         <DashboardIcon image="./Notif.png" label="Recent Alerts & Notifications" onClick={() => setActiveSection("Recent Alerts & Notifications")} />
         <DashboardIcon image="./MeterReadings.png" label="Meter Readings" onClick={() => setActiveSection("Meter Readings")} />
       </div>
-
-      <div style={{ display: "flex", justifyContent: "center", gap: "20px", marginTop: "40px" }}>
+      <div style={{ justifyContent: "center", width: "70%", marginTop: "20px" }}>
+        <AdminGraphView />
+      </div>
+      <div style={{ display: "flex", justifyContent: "center", gap: "20px", marginTop: "20px" }}>
         <GraphCard title="Occupancy Rate" />
         <GraphCard title="Energy Usage" />
         <GraphCard title="IoT Status" />
