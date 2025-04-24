@@ -5,7 +5,7 @@ import { LineChart } from "@mui/x-charts/LineChart"
 const locations = fetchAvailableLocations()
 const properties = fetchAvailableProperties()
 
-export const getRealtimeDeviceData = async (device_id, limit = 100) => {
+export const getRealtimeDeviceData = async (device_id, limit = 9999) => {
   //   console.log(device_id)
   try {
     const { data, error } = await supabase
@@ -26,6 +26,7 @@ export const realtimeReportChannel = (onChange) => {
   return supabase
     .channel("custom-all-channel")
     .on("postgres_changes", { event: "*", schema: "public", table: "RealtimeDataBlob" }, (payload) => {
+      console.log("changes detected")
       onChange(payload)
     })
     .subscribe()

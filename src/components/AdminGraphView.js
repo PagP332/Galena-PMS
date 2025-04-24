@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { dataCleanup, getRealtimeDeviceData, IotLineGraph, realtimeReportChannel, unsubToChannel } from "../api/iot"
 import { fetchAvailableDevices, fetchAvailableLocations, fetchAvailableProperties } from "../api/utils"
 
-export default function AdminGraphView() {
+function AdminGraphView() {
   const [availableProperties, setAvailableProperties] = useState([])
   const [availableDevices, setAvailableDevices] = useState([])
 
   const [filterHours, setFilterHours] = useState(1)
   const [selectedProperty, setSelectedProperty] = useState(null)
-  const [selectedDevice, setSelectedDevice] = useState(null)
+  const [selectedDevice, setSelectedDevice] = useState("")
 
   const [isSelectDisabled, setSelectDisabled] = useState(true)
   const [isFilterDisabled, setFilterDisabled] = useState(true)
 
   const [dataset, setDataset] = useState([])
+
+  const selectedDeviceRef = useRef(selectedDevice)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +36,7 @@ export default function AdminGraphView() {
       if (devices) setAvailableDevices(devices)
     }
     if (selectedProperty) {
+      // console.log("select property changed")
       fetchData()
       setDataset([])
       setSelectedDevice(null)
@@ -43,22 +46,25 @@ export default function AdminGraphView() {
 
   useEffect(() => {
     onRealtimeChange()
-    const channel = realtimeReportChannel(onRealtimeChange)
+    const channel = realtimeReportChannel(() => onRealtimeChange())
     return () => unsubToChannel(channel)
   }, [])
 
   useEffect(() => {
+    if (selectedDevice) selectedDeviceRef.current = selectedDevice
     onRealtimeChange()
   }, [selectedDevice, filterHours])
 
   const onRealtimeChange = async () => {
-    if (selectedDevice) {
-      const raw_data = await getRealtimeDeviceData(selectedDevice)
-      const data = dataCleanup(raw_data, filterHours)
-      setDataset(data)
-      setFilterDisabled(false)
-      // console.log(data)
-    }
+    // if (payload && [payload.new.device_id !== selectedDevice]) return
+    if (!selectedDeviceRef.current) return
+    console.log(selectedDeviceRef.current)
+    const raw_data = await getRealtimeDeviceData(selectedDeviceRef.current)
+    // const raw_data = await getRealtimeDeviceData("15c3174f-48ae-4d2d-b802-9d7ae39e730b")
+    const data = dataCleanup(raw_data, filterHours)
+    setDataset(data)
+    setFilterDisabled(false)
+    // console.log(data[0])
   }
 
   return (
@@ -76,13 +82,11 @@ export default function AdminGraphView() {
         </select>
         <select value={selectedDevice} onChange={(e) => setSelectedDevice(e.target.value)} disabled={isSelectDisabled}>
           <option value="">Select Device</option>
-          {availableDevices.map((device) => {
-            return (
-              <option value={device.device_id} key={device.device_id}>
-                {device.device_name}
-              </option>
-            )
-          })}
+          {availableDevices.map((device) => (
+            <option value={device.device_id} key={device.device_id}>
+              {device.device_name}
+            </option>
+          ))}
         </select>
       </div>
       <div
@@ -118,3 +122,5 @@ const button = {
   padding: 5,
   borderRadius: 10,
 }
+
+export default React.memo(AdminGraphView)
