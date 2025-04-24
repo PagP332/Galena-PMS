@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { dataCleanup, getRealtimeDeviceData, IotLineGraph, realtimeReportChannel, unsubToChannel } from "../api/iot"
-import { fetchAvailableLocations, fetchAvailableProperties } from "../api/utils"
+import { fetchAvailableDevices, fetchAvailableLocations, fetchAvailableProperties } from "../api/utils"
 
 export default function AdminGraphView() {
   const [availableProperties, setAvailableProperties] = useState([])
@@ -9,6 +9,9 @@ export default function AdminGraphView() {
   const [filterHours, setFilterHours] = useState(1)
   const [selectedProperty, setSelectedProperty] = useState(null)
   const [selectedDevice, setSelectedDevice] = useState(null)
+
+  const [isSelectDisabled, setSelectDisabled] = useState(true)
+  const [isFilterDisabled, setFilterDisabled] = useState(true)
 
   const [dataset, setDataset] = useState([])
 
@@ -21,8 +24,22 @@ export default function AdminGraphView() {
     }
     fetchData()
     // console.log("Available locations: ", availableLocations)
-    console.log("Available properties: ", availableProperties)
+    // console.log("Available properties: ", availableProperties)
   }, [])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // console.log("selected property ", selectedProperty)
+      const devices = await fetchAvailableDevices(selectedProperty)
+      if (devices) setAvailableDevices(devices)
+    }
+    if (selectedProperty) {
+      fetchData()
+      setDataset([])
+      setSelectedDevice(null)
+      setSelectDisabled(false)
+    }
+  }, [selectedProperty])
 
   useEffect(() => {
     onRealtimeChange()
@@ -32,27 +49,42 @@ export default function AdminGraphView() {
 
   useEffect(() => {
     onRealtimeChange()
-  }, [selectedDevice])
+  }, [selectedDevice, filterHours])
 
   const onRealtimeChange = async () => {
-    const raw_data = await getRealtimeDeviceData("91ab3057-ec43-42d6-b2f2-ff6e32f7bfe3")
-    const data = dataCleanup(raw_data)
-    setDataset(data)
-    console.log(data)
+    if (selectedDevice) {
+      const raw_data = await getRealtimeDeviceData(selectedDevice)
+      const data = dataCleanup(raw_data, filterHours)
+      setDataset(data)
+      setFilterDisabled(false)
+      // console.log(data)
+    }
   }
 
   return (
     <div style={{ backgroundColor: "#222", borderRadius: "10px", padding: "20px" }}>
-      <select value={selectedProperty} onChange={(e) => setSelectedProperty(e.target.value)}>
-        <option value="">Select Property</option>
-        {availableProperties.map((property) => {
-          return (
-            <option value={property.property_id} key={property.property_id}>
-              {property.property_name}
-            </option>
-          )
-        })}
-      </select>
+      <div style={{ display: "flex", gap: 20, alignItems: "center", justifyContent: "center" }}>
+        <select value={selectedProperty} onChange={(e) => setSelectedProperty(e.target.value)}>
+          <option value="">Select Property</option>
+          {availableProperties.map((property) => {
+            return (
+              <option value={property.property_id} key={property.property_id}>
+                {property.property_name}
+              </option>
+            )
+          })}
+        </select>
+        <select value={selectedDevice} onChange={(e) => setSelectedDevice(e.target.value)} disabled={isSelectDisabled}>
+          <option value="">Select Device</option>
+          {availableDevices.map((device) => {
+            return (
+              <option value={device.device_id} key={device.device_id}>
+                {device.device_name}
+              </option>
+            )
+          })}
+        </select>
+      </div>
       <div
         style={{
           padding: "20px",
@@ -65,10 +97,21 @@ export default function AdminGraphView() {
         <IotLineGraph data={dataset} />
       </div>
       <div style={{ gap: 5, display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <button onClick={() => setFilterHours(1)}>1 hour</button>
-        <button onClick={() => setFilterHours(6)}>6 hours</button>
-        <button onClick={() => setFilterHours(24)}>24 hours</button>
+        <button style={button} onClick={() => setFilterHours(1)} disabled={isFilterDisabled || filterHours === 1}>
+          1 hour
+        </button>
+        <button style={button} onClick={() => setFilterHours(6)} disabled={isFilterDisabled || filterHours === 6}>
+          6 hours
+        </button>
+        <button style={button} onClick={() => setFilterHours(24)} disabled={isFilterDisabled || filterHours === 24}>
+          24 hours
+        </button>
       </div>
     </div>
   )
+}
+
+const button = {
+  padding: 5,
+  borderRadius: 10,
 }

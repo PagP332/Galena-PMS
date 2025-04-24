@@ -31,6 +31,21 @@ export const fetchAvailableProperties = async () => {
   }
 }
 
+export const fetchAvailableDevices = async (property_id) => {
+  try {
+    let { data, error } = await supabase.from("DataDevices").select("*").eq("property_id", property_id)
+    if (error) {
+      throw error
+    } else {
+      console.log("Devices: ", data)
+      return data
+    }
+  } catch (e) {
+    console.log("Error fetching devices: ", e)
+    return null
+  }
+}
+
 export const addNewLocation = async (locationName) => {
   try {
     const { data, error } = await supabase.from("Locations").insert([

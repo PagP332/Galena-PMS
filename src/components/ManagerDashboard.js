@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { SignOutButton } from "./SignOutButton"
 import Loading from "./Loading"
+import AdminGraphView from "./AdminGraphView"
 
 const ManagerDashboard = () => {
   const [activeSection, setActiveSection] = useState("Dashboard")
@@ -26,7 +27,7 @@ const ManagerDashboard = () => {
     "Pending Maintenance Request": <PendingMaintenanceRequest />,
     "IoT Devices Status": <IoTDevicesStatus />,
     "Upcoming Paymennts & Expenses": <UpComingPE />,
-    "Meter Readings": <h2> Contents </h2>,
+    "Meter Readings": <AdminGraphView />,
   }
 
   const navItems = [
